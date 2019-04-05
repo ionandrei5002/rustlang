@@ -49,14 +49,6 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50 && \
     update-alternatives --set cpp-bin /usr/bin/cpp-8 && \
     update-alternatives --install /usr/bin/cc cc /usr/bin/g++-8 50
 
-# RUN apt update && \
-#     apt install -y wget && \
-#     wget https://static.rust-lang.org/dist/rust-1.32.0-x86_64-unknown-linux-gnu.tar.gz -O rust-1.32.0.tar.gz && \
-#     tar -C /usr/local -xzf rust-1.32.0.tar.gz && \
-#     bash /usr/local/rust-1.32.0-x86_64-unknown-linux-gnu/install.sh && \
-#     rm rust-1.32.0.tar.gz && \
-#     rm -rf /usr/local/rust-1.32.0-x86_64-unknown-linux-gnu/
-
 RUN apt update && \
     apt install -y wget && \ 
     wget https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init -O rustup-init && \
@@ -66,10 +58,17 @@ RUN echo 'include "/usr/share/themes/Ambiant-MATE/gtk-2.0/gtkrc"' > /home/andrei
 
 RUN echo "root:root" | chpasswd
 
+RUN apt install -y libx11-xcb-dev \
+    pkg-config
+
 USER andrei
 
 RUN ./rustup-init -y
 
 COPY .bashrc .bashrc
+
+RUN /home/andrei/.cargo/bin/rustup component add rust-analysis --toolchain stable-x86_64-unknown-linux-gnu && \
+    /home/andrei/.cargo/bin/rustup component add rust-src --toolchain stable-x86_64-unknown-linux-gnu && \
+    /home/andrei/.cargo/bin/rustup component add rls --toolchain stable-x86_64-unknown-linux-gnu
 
 CMD ["/bin/bash", "--login"]
