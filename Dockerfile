@@ -73,6 +73,9 @@ RUN apt install -y \
     wget \
     sudo
 
+RUN sudo apt install -y python3-pip && \
+    pip3 install conan
+
 RUN apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/*
@@ -108,5 +111,8 @@ RUN /home/$username/.cargo/bin/rustup component add rust-analysis --toolchain st
     /home/$username/.cargo/bin/rustup component add rls --toolchain stable-x86_64-unknown-linux-gnu
 
 RUN echo 'include "/usr/share/themes/Ambiant-MATE/gtk-2.0/gtkrc"' > /home/$username/.gtkrc-2.0
+
+RUN export PATH="$HOME/.local/bin:$PATH"
+RUN conan remote add conan-transit https://conan-transit.bintray.com
 
 CMD ["/bin/bash", "--login"]
