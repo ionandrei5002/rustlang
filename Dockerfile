@@ -65,7 +65,7 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 50 && \
     update-alternatives --set g++ /usr/bin/g++-8 && \
     update-alternatives --set gcc /usr/bin/gcc-8 && \
     update-alternatives --set cpp-bin /usr/bin/cpp-8 && \
-    update-alternatives --install /usr/bin/cc cc /usr/bin/g++-8 50
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-8 50
 
 RUN apt install -y \
     libx11-xcb-dev \
