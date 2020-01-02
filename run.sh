@@ -19,6 +19,7 @@ else
             -v ~/$root_path/rustlang/.vscode/:/home/andrei/.vscode/ \
             -v $project:/home/andrei/project/ \
             -v /media/andrei/6e5f0878-8312-4de4-b648-d84d12f21529/PyOutput/:/home/andrei/datasource/ \
+            --network=host \
             rustlang:latest
         exit 0
     fi
